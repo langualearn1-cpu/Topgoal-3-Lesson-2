@@ -1,0 +1,1906 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>اختبار القواعد التفاعلي - Grammar 1 Practice (Top Goal 3)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --wood-light: #f3d078;
+      --wood-dark: #c58b2b;
+      --olive-banner: #6c7f43;
+      --num-badge: #c05a2b;
+      --row-bg: #fdf6d8;
+    }
+
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #f4f7ec 0%, #e8f0d8 100%);
+      min-height: 100vh;
+    }
+
+    .en-font {
+      font-family: 'Fredoka', 'Segoe UI', Tahoma, sans-serif;
+    }
+
+    /* Wood Banner Styling matching the worksheet */
+    .wood-banner {
+      background: linear-gradient(180deg, #f6d786 0%, #eab955 50%, #d89e36 100%);
+      border: 3px solid #3e2723;
+      box-shadow: 0 4px 0 #3e2723, inset 0 2px 0 rgba(255,255,255,0.5);
+      border-radius: 14px;
+      position: relative;
+    }
+
+    /* Clipboard Ex Badge */
+    .ex-clipboard {
+      background: #ffffff;
+      border: 3px solid #2e3b1f;
+      border-radius: 10px;
+      box-shadow: 3px 4px 0 #4d6330;
+      transform: rotate(-3deg);
+    }
+
+    /* Worksheet Row Styling */
+    .worksheet-row {
+      background-color: var(--row-bg);
+      border: 2px solid #efe0a8;
+      border-radius: 16px;
+      transition: all 0.25s ease;
+    }
+    .worksheet-row:hover {
+      border-color: #d4b85c;
+      box-shadow: 0 4px 12px rgba(192, 90, 43, 0.08);
+    }
+
+    .num-tag {
+      background-color: var(--num-badge);
+      color: #fff;
+      font-family: 'Fredoka', sans-serif;
+      border-radius: 12px 4px 4px 12px;
+      min-width: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      box-shadow: inset -2px 0 0 rgba(0,0,0,0.15);
+    }
+
+    /* Ex 1: Hand-drawn Circle Effect ("ضع دائرة حول الإجابة الصحيحة") */
+    .circle-option {
+      position: relative;
+      display: inline-block;
+      padding: 4px 12px;
+      margin: 2px 4px;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      border: 2.5px solid transparent;
+      user-select: none;
+    }
+    .circle-option:hover {
+      background-color: rgba(234, 179, 8, 0.18);
+    }
+    .circle-option.selected {
+      border: 3px solid #dc2626;
+      background-color: rgba(254, 226, 226, 0.55);
+      color: #991b1b;
+      box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.15), inset 0 0 6px rgba(220, 38, 38, 0.1);
+      transform: scale(1.05);
+    }
+    .circle-option.selected::after {
+      content: '';
+      position: absolute;
+      inset: -4px -6px;
+      border: 2px solid #ef4444;
+      border-radius: 50% 45% 55% 48% / 48% 55% 45% 52%;
+      pointer-events: none;
+      transform: rotate(-2deg);
+    }
+    .circle-option.correct-circle {
+      border-color: #16a34a !important;
+      background-color: #dcfce7 !important;
+      color: #166534 !important;
+    }
+    .circle-option.correct-circle::after {
+      border-color: #16a34a !important;
+    }
+    .circle-option.wrong-circle {
+      border-color: #dc2626 !important;
+      background-color: #fee2e2 !important;
+      color: #991b1b !important;
+      text-decoration: line-through;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 9999px;
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .print-break-inside-avoid {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body class="text-slate-800 pb-16">
+
+  <!-- Top Header Banner (No Print) -->
+  <header class="no-print bg-gradient-to-r from-[#5a6f36] via-[#6c7f43] to-[#4e602d] text-white shadow-lg border-b-4 border-[#3b4921] sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-amber-400 border-2 border-slate-900 flex items-center justify-center text-2xl shadow-md">
+          💡
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="bg-amber-400 text-slate-900 text-xs font-black px-2.5 py-0.5 rounded-full en-font">Top Goal 3</span>
+            <span class="text-amber-200 text-xs font-bold">المضارع البسيط والمستمر</span>
+          </div>
+          <h1 class="text-xl md:text-2xl font-black tracking-wide flex items-center gap-2">
+            <span>Grammar 1 Practice</span>
+            <span class="text-sm md:text-base font-normal text-emerald-100 hidden sm:inline">| الاختبار التفاعلي الشامل</span>
+          </h1>
+        </div>
+      </div>
+
+      <!-- Quick Stats & Actions in Header -->
+      <div class="flex items-center gap-3 flex-wrap">
+        <div class="bg-black/25 backdrop-blur px-3.5 py-1.5 rounded-xl border border-white/15 flex items-center gap-3 text-sm">
+          <div>
+            <span class="text-emerald-200 text-xs block">الإنجاز</span>
+            <span id="headerProgressText" class="font-black text-white en-font">0 / 34</span>
+          </div>
+          <div class="h-7 w-px bg-white/20"></div>
+          <div>
+            <span class="text-amber-200 text-xs block">الدرجة الحالية</span>
+            <span id="headerScoreText" class="font-black text-amber-300 en-font">0 / 34</span>
+          </div>
+        </div>
+
+        <button onclick="toggleSound()" id="soundBtn" title="تشغيل/كتم المؤثرات الصوتية" class="bg-white/15 hover:bg-white/25 text-white p-2.5 rounded-xl border border-white/20 transition">
+          🔊
+        </button>
+
+        <button onclick="shuffleAndResetOptions()" title="إعادة خلط جميع الخيارات عشوائياً" class="bg-white/15 hover:bg-white/25 text-white font-bold px-3 py-2.5 rounded-xl border border-white/20 transition flex items-center gap-1.5 text-xs">
+          <span>🔀</span>
+          <span class="hidden sm:inline">خلط الخيارات</span>
+        </button>
+
+        <button onclick="gradeAllQuestions(true)" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-black px-4 py-2.5 rounded-xl border-2 border-slate-900 shadow-[0_3px_0_#1e293b] active:translate-y-0.5 transition flex items-center gap-1.5 text-sm">
+          <span>🏆</span>
+          <span>اعتماد النتيجة النهائية</span>
+        </button>
+
+        <button onclick="openPrintReport()" class="bg-white hover:bg-slate-100 text-slate-800 font-bold px-3.5 py-2.5 rounded-xl border-2 border-slate-900 shadow-[0_3px_0_#1e293b] active:translate-y-0.5 transition flex items-center gap-1.5 text-sm">
+          <span>🖨️</span>
+          <span>طباعة النتيجة</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <div class="no-print max-w-7xl mx-auto px-4 pt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+    <!-- Right/Side Column: Question Board (لوحة الأسئلة) & Student Info -->
+    <aside class="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-24 space-y-5 order-1 lg:order-2">
+      
+      <!-- Student Info Card -->
+      <div class="bg-white rounded-2xl p-4 shadow-md border-2 border-[#d4dfc0]">
+        <h2 class="font-black text-slate-800 text-base mb-3 flex items-center gap-2 border-b pb-2">
+          <span>👨‍🎓</span>
+          <span>بيانات الطالب/ـة (تظهر في الطباعة)</span>
+        </h2>
+        <div class="space-y-2.5 text-sm">
+          <div>
+            <label class="block text-slate-600 font-bold mb-1 text-xs">اسم الطالب/ـة:</label>
+            <input type="text" id="studentNameInput" placeholder="اكتب اسمك الثلاثي هنا..." class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#6c7f43] focus:outline-none font-bold text-slate-800" />
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-slate-600 font-bold mb-1 text-xs">الصف / الفصل:</label>
+              <input type="text" id="studentClassInput" placeholder="مثال: سادس / أ" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#6c7f43] focus:outline-none font-bold text-slate-800" />
+            </div>
+            <div>
+              <label class="block text-slate-600 font-bold mb-1 text-xs">المدرسة:</label>
+              <input type="text" id="studentSchoolInput" placeholder="اسم المدرسة" class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-[#6c7f43] focus:outline-none font-bold text-slate-800" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Question Navigation Board (لوحة الأسئلة) -->
+      <div class="bg-white rounded-2xl p-4 shadow-md border-2 border-[#d4dfc0]">
+        <div class="flex items-center justify-between border-b pb-2.5 mb-3">
+          <h2 class="font-black text-slate-800 text-base flex items-center gap-2">
+            <span>🧭</span>
+            <span>لوحة الأسئلة (34 فقرة)</span>
+          </h2>
+          <span id="completionPercentBadge" class="text-xs font-black bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full en-font">0%</span>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden mb-3 border border-slate-200">
+          <div id="sidebarProgressBar" class="h-full bg-gradient-to-r from-[#6c7f43] to-emerald-500 transition-all duration-300" style="width: 0%"></div>
+        </div>
+
+        <!-- Legend -->
+        <div class="grid grid-cols-2 gap-1.5 text-[11px] font-bold text-slate-600 mb-4 bg-slate-50 p-2 rounded-xl border border-slate-200">
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-slate-200 border border-slate-300 inline-block"></span> لم يُجب</div>
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-sky-500 inline-block"></span> تمت الإجابة</div>
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-500 inline-block"></span> إجابة صحيحة</div>
+          <div class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-rose-500 inline-block"></span> إجابة خاطئة</div>
+        </div>
+
+        <!-- Section Filter Tabs -->
+        <div class="mb-3">
+          <p class="text-xs font-bold text-slate-500 mb-1.5">عرض الأقسام:</p>
+          <div class="grid grid-cols-4 gap-1 text-xs font-bold">
+            <button onclick="filterSection('all')" id="tab-all" class="sec-tab bg-[#6c7f43] text-white py-1.5 rounded-lg transition">الكل</button>
+            <button onclick="filterSection('ex1')" id="tab-ex1" class="sec-tab bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 rounded-lg en-font transition">Ex.1</button>
+            <button onclick="filterSection('ex2')" id="tab-ex2" class="sec-tab bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 rounded-lg en-font transition">Ex.2</button>
+            <button onclick="filterSection('ex3')" id="tab-ex3" class="sec-tab bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 rounded-lg en-font transition">Ex.3</button>
+            <button onclick="filterSection('ex4')" id="tab-ex4" class="sec-tab bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 rounded-lg en-font transition">Ex.4</button>
+            <button onclick="filterSection('ex5')" id="tab-ex5" class="sec-tab bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 rounded-lg en-font transition">Ex.5</button>
+            <button onclick="filterSection('ex6')" id="tab-ex6" class="sec-tab bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 rounded-lg en-font transition">Ex.6</button>
+            <button onclick="resetQuiz()" title="إعادة تعيين الاختبار" class="bg-rose-50 hover:bg-rose-100 text-rose-700 py-1.5 rounded-lg transition">🔄</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Question Grid Grouped by Section -->
+        <div id="questionBoardContainer" class="space-y-3 max-h-[380px] overflow-y-auto pr-1">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Grammar Quick Cheat-Sheet Toggle -->
+        <div class="mt-4 pt-3 border-t border-slate-200">
+          <button onclick="toggleGrammarRuleModal()" class="w-full py-2 px-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition">
+            <span>📖</span>
+            <span>ملخص سريع للقاعدة (تلميح ذكي)</span>
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Left/Main Column: The 6 Exercises -->
+    <main class="lg:col-span-8 xl:col-span-9 space-y-8 order-2 lg:order-1">
+
+      <!-- Motivational Result Banner (Appears when test is graded) -->
+      <section id="finalResultSection" class="hidden bg-white rounded-3xl p-6 md:p-8 shadow-xl border-4 border-amber-400 relative overflow-hidden">
+        <div class="absolute -top-12 -left-12 w-40 h-40 bg-amber-100 rounded-full opacity-50 pointer-events-none"></div>
+        <div class="relative z-10">
+          <div class="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-slate-200 pb-6">
+            <div class="flex items-center gap-4 text-center md:text-right flex-col md:flex-row">
+              <div id="resultTrophyIcon" class="w-20 h-20 rounded-3xl bg-amber-100 border-2 border-amber-400 flex items-center justify-center text-5xl shadow-inner">
+                🏆
+              </div>
+              <div>
+                <span id="resultBadgeTag" class="inline-block px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 mb-1">نتيجة الاختبار النهائية</span>
+                <h2 id="resultTitleText" class="text-2xl md:text-3xl font-black text-slate-900">أحسنت! عمل رائع يا بطل!</h2>
+                <p id="resultSubText" class="text-slate-600 font-semibold text-sm mt-1"></p>
+              </div>
+            </div>
+
+            <div class="bg-slate-900 text-white px-6 py-4 rounded-2xl text-center min-w-[170px] shadow-lg">
+              <span class="text-xs text-amber-300 font-bold block mb-1">الدرجة الكلية</span>
+              <div id="finalScoreBig" class="text-4xl font-black text-amber-400 en-font">34 / 34</div>
+              <div id="finalPercentBig" class="text-sm font-bold text-emerald-300 en-font mt-0.5">100% - Full Mark</div>
+            </div>
+          </div>
+
+          <!-- Per-Exercise Breakdown Cards -->
+          <div id="sectionBreakdownGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 my-6">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Motivational Feedback & Action Buttons -->
+          <div class="bg-gradient-to-r from-amber-50 to-emerald-50 p-4 rounded-2xl border border-emerald-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-sm font-bold text-slate-700 flex items-center gap-2">
+              <span class="text-2xl">🌟</span>
+              <span id="motivationalQuoteText">كل إجابة صحيحة هي خطوة نحو القمة! راجع التغذية الراجعة أسفل كل سؤال لتثبيت القاعدة.</span>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+              <button onclick="openPrintReport()" class="bg-[#6c7f43] hover:bg-[#5a6b36] text-white font-black px-5 py-2.5 rounded-xl shadow flex items-center gap-2 text-sm transition">
+                <span>🖨️</span>
+                <span>طباعة النتيجة والتقرير</span>
+              </button>
+              <button onclick="resetQuiz()" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 font-bold px-4 py-2.5 rounded-xl text-sm transition">
+                إعادة المحاولة
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- SECTION 1: Ex. 1 - ضع دائرة حول الإجابة الصحيحة -->
+      <!-- ========================================================= -->
+      <section id="section-ex1" class="quiz-section bg-white rounded-3xl p-5 md:p-7 shadow-md border-2 border-[#d4dfc0]">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="ex-clipboard px-3 py-2 text-center">
+              <div class="w-4 h-1.5 bg-amber-500 mx-auto rounded-full mb-1 border border-slate-800"></div>
+              <span class="en-font font-black text-lg text-slate-900">Ex. 1</span>
+            </div>
+            <div class="wood-banner px-5 py-2.5">
+              <h2 class="en-font font-black text-lg md:text-xl text-slate-900">Choose the correct answer.</h2>
+              <p class="text-xs font-bold text-amber-950">السؤال الأول: ضع دائرة حول الإجابة الصحيحة (انقر على الكلمة الصحيحة داخل القوسين لرسم دائرة حولها)</p>
+            </div>
+          </div>
+          <button onclick="gradeSection('ex1')" class="bg-[#6c7f43] hover:bg-[#586934] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+            ✓ تصحيح السؤال الأول
+          </button>
+        </div>
+
+        <div id="ex1-container" class="space-y-3.5" dir="ltr">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- SECTION 2: Ex. 2 - Complete the sentences with the correct form of verbs -->
+      <!-- ========================================================= -->
+      <section id="section-ex2" class="quiz-section bg-white rounded-3xl p-5 md:p-7 shadow-md border-2 border-[#d4dfc0]">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="ex-clipboard px-3 py-2 text-center">
+              <div class="w-4 h-1.5 bg-amber-500 mx-auto rounded-full mb-1 border border-slate-800"></div>
+              <span class="en-font font-black text-lg text-slate-900">Ex. 2</span>
+            </div>
+            <div class="wood-banner px-5 py-2.5">
+              <h2 class="en-font font-black text-lg md:text-xl text-slate-900">Complete the sentences with the correct form of verbs.</h2>
+              <p class="text-xs font-bold text-amber-950">السؤال الثاني: أكمل الجمل بالصيغة الصحيحة للفعل بين القوسين (اكتب الإجابة أو استعن بالأزرار المساعدة)</p>
+            </div>
+          </div>
+          <button onclick="gradeSection('ex2')" class="bg-[#6c7f43] hover:bg-[#586934] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+            ✓ تصحيح السؤال الثاني
+          </button>
+        </div>
+
+        <div id="ex2-container" class="space-y-4" dir="ltr">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- SECTION 3: Ex. 3 - Make the sentences negative -->
+      <!-- ========================================================= -->
+      <section id="section-ex3" class="quiz-section bg-white rounded-3xl p-5 md:p-7 shadow-md border-2 border-[#d4dfc0]">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="ex-clipboard px-3 py-2 text-center">
+              <div class="w-4 h-1.5 bg-amber-500 mx-auto rounded-full mb-1 border border-slate-800"></div>
+              <span class="en-font font-black text-lg text-slate-900">Ex. 3</span>
+            </div>
+            <div class="wood-banner px-5 py-2.5">
+              <h2 class="en-font font-black text-lg md:text-xl text-slate-900">Make the sentences negative.</h2>
+              <p class="text-xs font-bold text-amber-950">السؤال الثالث: حوّل الجمل التالية إلى صيغة النفي (يمكنك الكتابة مباشرة أو النقر على الكلمات المساعدة لتكوين الجملة)</p>
+            </div>
+          </div>
+          <button onclick="gradeSection('ex3')" class="bg-[#6c7f43] hover:bg-[#586934] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+            ✓ تصحيح السؤال الثالث
+          </button>
+        </div>
+
+        <div id="ex3-container" class="space-y-4" dir="ltr">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- SECTION 4: Ex. 4 - Make questions -->
+      <!-- ========================================================= -->
+      <section id="section-ex4" class="quiz-section bg-white rounded-3xl p-5 md:p-7 shadow-md border-2 border-[#d4dfc0]">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="ex-clipboard px-3 py-2 text-center">
+              <div class="w-4 h-1.5 bg-amber-500 mx-auto rounded-full mb-1 border border-slate-800"></div>
+              <span class="en-font font-black text-lg text-slate-900">Ex. 4</span>
+            </div>
+            <div class="wood-banner px-5 py-2.5">
+              <h2 class="en-font font-black text-lg md:text-xl text-slate-900">Make questions.</h2>
+              <p class="text-xs font-bold text-amber-950">السؤال الرابع: كوّن سؤالاً من الجمل التالية (يمكنك الكتابة مباشرة أو استخدام شريط الكلمات المساعد)</p>
+            </div>
+          </div>
+          <button onclick="gradeSection('ex4')" class="bg-[#6c7f43] hover:bg-[#586934] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+            ✓ تصحيح السؤال الرابع
+          </button>
+        </div>
+
+        <div id="ex4-container" class="space-y-4" dir="ltr">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- SECTION 5: Ex. 5 - Choose the correct negative form -->
+      <!-- ========================================================= -->
+      <section id="section-ex5" class="quiz-section bg-white rounded-3xl p-5 md:p-7 shadow-md border-2 border-[#d4dfc0]">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="ex-clipboard px-3 py-2 text-center">
+              <div class="w-4 h-1.5 bg-amber-500 mx-auto rounded-full mb-1 border border-slate-800"></div>
+              <span class="en-font font-black text-lg text-slate-900">Ex. 5</span>
+            </div>
+            <div class="wood-banner px-5 py-2.5">
+              <h2 class="en-font font-black text-lg md:text-xl text-slate-900">Choose the correct negative form.</h2>
+              <p class="text-xs font-bold text-amber-950">السؤال الخامس: اختر صيغة النفي الصحيحة مما بين الخيارات (a, b, c, d)</p>
+            </div>
+          </div>
+          <button onclick="gradeSection('ex5')" class="bg-[#6c7f43] hover:bg-[#586934] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+            ✓ تصحيح السؤال الخامس
+          </button>
+        </div>
+
+        <div id="ex5-container" class="space-y-4" dir="ltr">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- SECTION 6: Ex. 6 - Choose the correct question -->
+      <!-- ========================================================= -->
+      <section id="section-ex6" class="quiz-section bg-white rounded-3xl p-5 md:p-7 shadow-md border-2 border-[#d4dfc0]">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="ex-clipboard px-3 py-2 text-center">
+              <div class="w-4 h-1.5 bg-amber-500 mx-auto rounded-full mb-1 border border-slate-800"></div>
+              <span class="en-font font-black text-lg text-slate-900">Ex. 6</span>
+            </div>
+            <div class="wood-banner px-5 py-2.5">
+              <h2 class="en-font font-black text-lg md:text-xl text-slate-900">Choose the correct question.</h2>
+              <p class="text-xs font-bold text-amber-950">السؤال السادس: اختر أداة الاستفهام الصحيحة لتكوين السؤال (Is / Are / Do / Does)</p>
+            </div>
+          </div>
+          <button onclick="gradeSection('ex6')" class="bg-[#6c7f43] hover:bg-[#586934] text-white text-xs font-bold px-4 py-2 rounded-xl shadow transition">
+            ✓ تصحيح السؤال السادس
+          </button>
+        </div>
+
+        <div id="ex6-container" class="space-y-4" dir="ltr">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- Bottom Submit & Print Bar -->
+      <div class="bg-gradient-to-r from-[#5a6f36] to-[#425226] text-white rounded-3xl p-6 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="text-lg font-black flex items-center gap-2">
+            <span>🎯</span>
+            <span>هل انتهيت من الإجابة على جميع الأسئلة الستة؟</span>
+          </h3>
+          <p class="text-xs text-emerald-100 mt-1">اضغط على زر اعتماد النتيجة النهائية للحصول على درجتك الكاملة والتغذية الراجعة والشهادة التشجيعية القابلة للطباعة.</p>
+        </div>
+        <div class="flex items-center gap-3 shrink-0">
+          <button onclick="gradeAllQuestions(true)" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-black px-6 py-3 rounded-2xl border-2 border-slate-900 shadow-[0_4px_0_#1e293b] active:translate-y-0.5 transition text-base">
+            🏆 إنهاء الاختبار وعرض النتيجة
+          </button>
+          <button onclick="openPrintReport()" class="bg-white hover:bg-slate-100 text-slate-900 font-bold px-5 py-3 rounded-2xl border-2 border-slate-900 shadow-[0_4px_0_#1e293b] active:translate-y-0.5 transition text-base">
+            🖨️ طباعة النتيجة
+          </button>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Grammar Cheat Sheet Modal -->
+  <div id="grammarModal" class="no-print fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border-4 border-[#6c7f43] max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <h3 class="text-lg font-black text-slate-800 flex items-center gap-2">
+          <span>💡</span>
+          <span>ملخص قاعدة المضارع البسيط والمضارع المستمر (Grammar Guide)</span>
+        </h3>
+        <button onclick="toggleGrammarRuleModal()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 font-black text-slate-600">✕</button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200">
+          <h4 class="font-black text-amber-900 mb-2 text-base">1️⃣ المضارع البسيط (Present Simple)</h4>
+          <p class="text-xs text-slate-600 mb-2">يُستخدم للعادات والأفعال المتكررة.</p>
+          <div class="bg-white p-2.5 rounded-xl border border-amber-200 mb-2">
+            <span class="font-bold text-xs text-amber-800 block">الكلمات الدالة (Keywords):</span>
+            <span class="en-font font-bold text-xs text-slate-800">every day, every morning, every evening, every Friday, on Fridays</span>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-700">
+            <li>• مع <b>He / She / It / مفرد</b>: نضيف للفعل <b class="en-font text-rose-600">-s / -es</b> (مثل: <span class="en-font">goes, plays, cooks, watches</span>).</li>
+            <li>• مع <b>I / We / They / You</b>: يبقى الفعل في المصدر بدون إضافة (مثل: <span class="en-font">play, study, eat</span>).</li>
+            <li>• <b>النفي:</b> نستخدم <b class="en-font text-rose-600">doesn't / don't + الفعل بالمصدر</b> (بدون s).</li>
+            <li>• <b>السؤال:</b> نبدأ بـ <b class="en-font text-rose-600">Does / Do + الفاعل + الفعل بالمصدر؟</b></li>
+          </ul>
+        </div>
+        <div class="bg-sky-50 p-4 rounded-2xl border border-sky-200">
+          <h4 class="font-black text-sky-900 mb-2 text-base">2️⃣ المضارع المستمر (Present Continuous)</h4>
+          <p class="text-xs text-slate-600 mb-2">يُستخدم للأفعال التي تحدث الآن لحظة الكلام.</p>
+          <div class="bg-white p-2.5 rounded-xl border border-sky-200 mb-2">
+            <span class="font-bold text-xs text-sky-800 block">الكلمات الدالة (Keywords):</span>
+            <span class="en-font font-bold text-xs text-slate-800">now, Look!, Listen!, at the moment</span>
+          </div>
+          <ul class="space-y-1.5 text-xs text-slate-700">
+            <li>• <b>الإثبات:</b> <b class="en-font text-sky-700">(am / is / are) + verb-ing</b> (مثل: <span class="en-font">is crying, are singing</span>).</li>
+            <li>• <b>النفي:</b> نضع <b class="en-font text-sky-700">not</b> بعد الفعل المساعد (<span class="en-font">isn't / aren't + verb-ing</span>).</li>
+            <li>• <b>السؤال:</b> نقدم <b class="en-font text-sky-700">Is / Are</b> في بداية الجملة قبل الفاعل (<span class="en-font">Is she reading...? / Are they studying...?</span>).</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-5 text-left">
+        <button onclick="toggleGrammarRuleModal()" class="bg-[#6c7f43] text-white font-bold px-6 py-2 rounded-xl text-sm">فهمت، العودة للاختبار</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- PRINTABLE REPORT VIEW (تقرير الطباعة والشهادة) -->
+  <!-- ========================================================= -->
+  <div id="printableReportArea" class="hidden print-only max-w-4xl mx-auto p-6 bg-white text-slate-900">
+    <div class="border-4 border-double border-slate-800 p-6 rounded-2xl">
+      <!-- Print Header -->
+      <div class="flex items-center justify-between border-b-2 border-slate-800 pb-4 mb-4">
+        <div>
+          <h1 class="text-2xl font-black">تقرير نتيجة اختبار القواعد التفاعلي</h1>
+          <p class="text-sm font-bold text-slate-600 en-font">Top Goal 3 - Grammar 1 Practice (Full Mark Assessment)</p>
+        </div>
+        <div class="text-left text-xs font-bold space-y-1">
+          <div id="printDateText">التاريخ: --</div>
+          <div class="bg-slate-100 px-3 py-1 rounded border border-slate-300 en-font font-black text-sm" id="printBadgeStatus">FULL MARK</div>
+        </div>
+      </div>
+
+      <!-- Student Details & Score Box -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-300 mb-5 text-sm">
+        <div>
+          <span class="text-slate-500 text-xs block">اسم الطالب/ـة:</span>
+          <span id="printStudentName" class="font-black text-base">غير محدد</span>
+        </div>
+        <div>
+          <span class="text-slate-500 text-xs block">الصف / الفصل:</span>
+          <span id="printStudentClass" class="font-black text-base">غير محدد</span>
+        </div>
+        <div>
+          <span class="text-slate-500 text-xs block">المدرسة:</span>
+          <span id="printStudentSchool" class="font-black text-base">غير محدد</span>
+        </div>
+        <div class="bg-amber-100 p-2 rounded-lg border border-amber-400 text-center">
+          <span class="text-amber-900 text-xs font-bold block">الدرجة النهائية</span>
+          <span id="printFinalScore" class="font-black text-xl en-font text-slate-900">0 / 34 (0%)</span>
+        </div>
+      </div>
+
+      <!-- Motivational Message in Print -->
+      <div id="printMotivationalBox" class="mb-5 p-3 rounded-xl border border-emerald-400 bg-emerald-50 text-center font-bold text-sm text-emerald-950">
+        🌟 أحسنت! واصل التميز والتألق في تعلم اللغة الإنجليزية 🌟
+      </div>
+
+      <!-- Detailed Questions Table for Print -->
+      <div id="printQuestionsTableContainer" class="space-y-4 text-xs">
+        <!-- Populated dynamically on print -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // QUIZ DATA: All 6 Exercises (34 Questions total) matching the images
+    // =========================================================================
+    const quizData = {
+      ex1: {
+        id: 'ex1',
+        titleEn: 'Ex. 1: Choose the correct answer.',
+        titleAr: 'السؤال الأول: ضع دائرة حول الإجابة الصحيحة',
+        items: [
+          {
+            id: 'ex1_1',
+            num: 1,
+            before: 'Ahmed',
+            options: ['go', 'goes', 'is going', 'going'],
+            after: 'to school every day.',
+            correct: 'goes',
+            feedback: 'وجود (every day) يدل على المضارع البسيط (عادة متكررة)، والفاعل المفرد (Ahmed) يأخذ الفعل مضافاً له (-es): goes.'
+          },
+          {
+            id: 'ex1_2',
+            num: 2,
+            before: 'Look! The baby',
+            options: ['cries', 'is crying', 'cry', 'crying'],
+            after: '.',
+            correct: 'is crying',
+            feedback: 'كلمة (Look!) تدل على حدث يقع الآن (مضارع مستمر)، والفاعل المفرد (The baby) يأخذ: is crying.'
+          },
+          {
+            id: 'ex1_3',
+            num: 3,
+            before: 'My father',
+            options: ['drinks', 'drink', 'is drinking', 'drinking'],
+            after: 'coffee every morning.',
+            correct: 'drinks',
+            feedback: 'عبارة (every morning) تدل على عادة يومية في المضارع البسيط، والفاعل المفرد (My father) يأخذ الفعل مع (-s): drinks.'
+          },
+          {
+            id: 'ex1_4',
+            num: 4,
+            before: 'Listen! The birds',
+            options: ['sing', 'sings', 'are singing', 'singing'],
+            after: '.',
+            correct: 'are singing',
+            feedback: 'كلمة (Listen!) تدل على المضارع المستمر الآن، والفاعل الجمع (The birds) يأخذ: are singing.'
+          },
+          {
+            id: 'ex1_5',
+            num: 5,
+            before: 'We',
+            options: ['play', 'plays', 'are playing', 'playing'],
+            after: 'football on Fridays.',
+            correct: 'play',
+            feedback: 'عبارة (on Fridays) تدل على التكرار في المضارع البسيط، ومع الضمير (We) يبقى الفعل في المصدر بدون إضافات: play.'
+          },
+          {
+            id: 'ex1_6',
+            num: 6,
+            before: 'She',
+            options: ['does', 'do', 'is doing', 'doing'],
+            after: 'her homework now.',
+            correct: 'is doing',
+            feedback: 'كلمة (now) تدل على المضارع المستمر في هذه اللحظة، ومع الضمير (She) نختار: is doing.'
+          }
+        ]
+      },
+
+      ex2: {
+        id: 'ex2',
+        titleEn: 'Ex. 2: Complete the sentences with the correct form of verbs.',
+        titleAr: 'السؤال الثاني: أكمل الجمل بالصيغة الصحيحة للأفعال',
+        items: [
+          {
+            id: 'ex2_1',
+            num: 1,
+            sentence: 'My mother (cook) dinner every day.',
+            verb: 'cook',
+            accepted: ['cooks', 'my mother cooks dinner every day', 'my mother cooks dinner every day.'],
+            displayAnswer: 'cooks',
+            helpers: ['cook', 'cooks', 'is cooking', 'cooking'],
+            feedback: 'بسبب وجود (every day) نستخدم المضارع البسيط، ومع الفاعل المفرد (My mother) نضيف (-s) للفعل فيصبح: cooks.'
+          },
+          {
+            id: 'ex2_2',
+            num: 2,
+            sentence: 'Look! She (cook) now.',
+            verb: 'cook',
+            accepted: ['is cooking', "'s cooking", 'look! she is cooking now', 'she is cooking now'],
+            displayAnswer: 'is cooking',
+            helpers: ['cooks', 'is cooking', 'are cooking', 'cooking'],
+            feedback: 'وجود (Look!) و (now) يدل على المضارع المستمر الآن، ومع (She) نستخدم: is cooking.'
+          },
+          {
+            id: 'ex2_3',
+            num: 3,
+            sentence: 'Ali (play) football every Friday.',
+            verb: 'play',
+            accepted: ['plays', 'ali plays football every friday', 'ali plays football every friday.'],
+            displayAnswer: 'plays',
+            helpers: ['play', 'plays', 'is playing', 'playing'],
+            feedback: 'عبارة (every Friday) تدل على عادة في المضارع البسيط، ومع الفاعل المفرد (Ali) نضيف (-s): plays.'
+          },
+          {
+            id: 'ex2_4',
+            num: 4,
+            sentence: 'He (play) football at the moment.',
+            verb: 'play',
+            accepted: ['is playing', "'s playing", 'he is playing football at the moment'],
+            displayAnswer: 'is playing',
+            helpers: ['plays', 'is playing', 'are playing', 'playing'],
+            feedback: 'عبارة (at the moment) تعني في هذه اللحظة (مضارع مستمر)، ومع (He) نكتب: is playing.'
+          },
+          {
+            id: 'ex2_5',
+            num: 5,
+            sentence: 'We (study) English every day.',
+            verb: 'study',
+            accepted: ['study', 'we study english every day'],
+            displayAnswer: 'study',
+            helpers: ['study', 'studies', 'are studying', 'is studying'],
+            feedback: 'وجود (every day) يدل على المضارع البسيط، ومع الفاعل الجمع (We) يبقى الفعل في المصدر كما هو: study.'
+          },
+          {
+            id: 'ex2_6',
+            num: 6,
+            sentence: 'We (study) now.',
+            verb: 'study',
+            accepted: ['are studying', "'re studying", 'we are studying now'],
+            displayAnswer: 'are studying',
+            helpers: ['study', 'is studying', 'are studying', 'studying'],
+            feedback: 'كلمة (now) تدل على المضارع المستمر الآن، ومع الضمير (We) نكتب: are studying.'
+          }
+        ]
+      },
+
+      ex3: {
+        id: 'ex3',
+        titleEn: 'Ex. 3: Make the sentences negative.',
+        titleAr: 'السؤال الثالث: حوّل الجمل إلى النفي',
+        items: [
+          {
+            id: 'ex3_1',
+            num: 1,
+            prompt: 'He plays football.',
+            accepted: [
+              "he doesn't play football",
+              "he does not play football"
+            ],
+            displayAnswer: "He doesn't play football.",
+            wordBank: ['He', "doesn't", 'don\'t', 'play', 'plays', 'football.'],
+            feedback: 'الجملة في المضارع البسيط والفاعل مفرد (He)، عند النفي نستخدم (doesn\'t) ونُرجع الفعل (plays) إلى المصدر بدون s فيصبح: He doesn\'t play football.'
+          },
+          {
+            id: 'ex3_2',
+            num: 2,
+            prompt: 'Sara watches TV every evening.',
+            accepted: [
+              "sara doesn't watch tv every evening",
+              "sara does not watch tv every evening",
+              "she doesn't watch tv every evening",
+              "she does not watch tv every evening"
+            ],
+            displayAnswer: "Sara doesn't watch TV every evening.",
+            wordBank: ['Sara', "doesn't", 'watch', 'watches', 'TV', 'every', 'evening.'],
+            feedback: 'مع الفاعل المفرد (Sara) ننفي بـ (doesn\'t) ونحذف (-es) من الفعل (watches) ليعود للمصدر: Sara doesn\'t watch TV every evening.'
+          },
+          {
+            id: 'ex3_3',
+            num: 3,
+            prompt: 'They live in Jeddah.',
+            accepted: [
+              "they don't live in jeddah",
+              "they do not live in jeddah"
+            ],
+            displayAnswer: "They don't live in Jeddah.",
+            wordBank: ['They', "don't", "doesn't", 'live', 'in', 'Jeddah.'],
+            feedback: 'الفاعل جمع (They) في المضارع البسيط، ننفي باستخدام (don\'t) مع الفعل في المصدر: They don\'t live in Jeddah.'
+          },
+          {
+            id: 'ex3_4',
+            num: 4,
+            prompt: 'He is reading a book.',
+            accepted: [
+              "he isn't reading a book",
+              "he is not reading a book",
+              "he's not reading a book"
+            ],
+            displayAnswer: "He isn't reading a book.",
+            wordBank: ['He', "isn't", "doesn't", 'reading', 'a', 'book.'],
+            feedback: 'الجملة في المضارع المستمر لوجود (is reading)، وعند النفي نضع (not) بعد (is) فتصبح: He isn\'t reading a book.'
+          },
+          {
+            id: 'ex3_5',
+            num: 5,
+            prompt: 'We are playing football.',
+            accepted: [
+              "we aren't playing football",
+              "we are not playing football",
+              "we're not playing football"
+            ],
+            displayAnswer: "We aren't playing football.",
+            wordBank: ['We', "aren't", "don't", 'playing', 'football.'],
+            feedback: 'الجملة في المضارع المستمر (are playing)، ننفي بإضافة (not) إلى (are) فتصبح: We aren\'t playing football.'
+          },
+          {
+            id: 'ex3_6',
+            num: 6,
+            prompt: 'I eat breakfast at school.',
+            accepted: [
+              "i don't eat breakfast at school",
+              "i do not eat breakfast at school"
+            ],
+            displayAnswer: "I don't eat breakfast at school.",
+            wordBank: ['I', "don't", "doesn't", 'eat', 'breakfast', 'at', 'school.'],
+            feedback: 'مع الضمير (I) في المضارع البسيط ننفي باستخدام (don\'t) قبل الفعل: I don\'t eat breakfast at school.'
+          },
+          {
+            id: 'ex3_7',
+            num: 7,
+            prompt: 'She is doing her homework.',
+            accepted: [
+              "she isn't doing her homework",
+              "she is not doing her homework",
+              "she's not doing her homework"
+            ],
+            displayAnswer: "She isn't doing her homework.",
+            wordBank: ['She', "isn't", "doesn't", 'doing', 'her', 'homework.'],
+            feedback: 'الجملة في المضارع المستمر (is doing)، ننفي بتحويل (is) إلى (isn\'t / is not): She isn\'t doing her homework.'
+          }
+        ]
+      },
+
+      ex4: {
+        id: 'ex4',
+        titleEn: 'Ex. 4: Make questions.',
+        titleAr: 'السؤال الرابع: كوّن أسئلة من الجمل التالية',
+        items: [
+          {
+            id: 'ex4_1',
+            num: 1,
+            prompt: 'He plays football.',
+            accepted: [
+              'does he play football'
+            ],
+            displayAnswer: 'Does he play football?',
+            wordBank: ['Does', 'Do', 'he', 'play', 'plays', 'football?'],
+            feedback: 'لتكوين سؤال في المضارع البسيط مع الفاعل المفرد (He) نبدأ بـ (Does) ونُرجع الفعل (plays) إلى المصدر (play): Does he play football?'
+          },
+          {
+            id: 'ex4_2',
+            num: 2,
+            prompt: 'Ahmed goes to school every day.',
+            accepted: [
+              'does ahmed go to school every day',
+              'does he go to school every day',
+              'where does ahmed go every day'
+            ],
+            displayAnswer: 'Does Ahmed go to school every day?',
+            wordBank: ['Does', 'Ahmed', 'go', 'goes', 'to', 'school', 'every', 'day?'],
+            feedback: 'الفاعل مفرد (Ahmed) والفعل (goes) في المضارع البسيط، نبدأ السؤال بـ (Does) ويعود الفعل للمصدر (go): Does Ahmed go to school every day?'
+          },
+          {
+            id: 'ex4_3',
+            num: 3,
+            prompt: 'They study English.',
+            accepted: [
+              'do they study english'
+            ],
+            displayAnswer: 'Do they study English?',
+            wordBank: ['Do', 'Does', 'they', 'study', 'English?'],
+            feedback: 'مع الفاعل الجمع (They) في المضارع البسيط نبدأ السؤال بـ (Do) مع بقاء الفعل في المصدر: Do they study English?'
+          },
+          {
+            id: 'ex4_4',
+            num: 4,
+            prompt: 'She is reading a book.',
+            accepted: [
+              'is she reading a book'
+            ],
+            displayAnswer: 'Is she reading a book?',
+            wordBank: ['Is', 'Does', 'she', 'reading', 'a', 'book?'],
+            feedback: 'في المضارع المستمر نقدم الفعل المساعد (Is) قبل الفاعل (she): Is she reading a book?'
+          },
+          {
+            id: 'ex4_5',
+            num: 5,
+            prompt: 'The boys are playing football.',
+            accepted: [
+              'are the boys playing football',
+              'are they playing football'
+            ],
+            displayAnswer: 'Are the boys playing football?',
+            wordBank: ['Are', 'Do', 'the', 'boys', 'playing', 'football?'],
+            feedback: 'نقدم الفعل المساعد (Are) في بداية الجملة قبل الفاعل الجمع (the boys): Are the boys playing football?'
+          },
+          {
+            id: 'ex4_6',
+            num: 6,
+            prompt: 'You like pizza.',
+            accepted: [
+              'do you like pizza'
+            ],
+            displayAnswer: 'Do you like pizza?',
+            wordBank: ['Do', 'Are', 'you', 'like', 'pizza?'],
+            feedback: 'مع الضمير (You) في المضارع البسيط نسأل بـ (Do) في بداية الجملة: Do you like pizza?'
+          },
+          {
+            id: 'ex4_7',
+            num: 7,
+            prompt: 'We are watching TV.',
+            accepted: [
+              'are you watching tv',
+              'are we watching tv'
+            ],
+            displayAnswer: 'Are you watching TV? / Are we watching TV?',
+            wordBank: ['Are', 'you', 'we', 'watching', 'TV?'],
+            feedback: 'نقدم الفعل المساعد (Are) في بداية السؤال، والضمير (We) يتحول إلى (you) أو يبقى (we): Are you watching TV?'
+          }
+        ]
+      },
+
+      ex5: {
+        id: 'ex5',
+        titleEn: 'Ex. 5: Choose the correct negative form.',
+        titleAr: 'السؤال الخامس: اختر صيغة النفي الصحيحة',
+        items: [
+          {
+            id: 'ex5_1',
+            num: 1,
+            stem: 'She _______ to school on Friday.',
+            options: [
+              { letter: 'a', text: "don't go" },
+              { letter: 'b', text: "doesn't goes" },
+              { letter: 'c', text: "doesn't go" },
+              { letter: 'd', text: "isn't go" }
+            ],
+            correct: "doesn't go",
+            feedback: 'الفاعل مفرد (She) والجملة في المضارع البسيط (on Friday)، لذا ننفي بـ (doesn\'t) يليها الفعل في المصدر بدون إضافات (go).'
+          },
+          {
+            id: 'ex5_2',
+            num: 2,
+            stem: 'They _______ TV now.',
+            options: [
+              { letter: 'a', text: "don't watching" },
+              { letter: 'b', text: "aren't watching" },
+              { letter: 'c', text: "doesn't watch" },
+              { letter: 'd', text: "isn't watching" }
+            ],
+            correct: "aren't watching",
+            feedback: 'كلمة (now) تدل على المضارع المستمر، والفاعل جمع (They) يأخذ في النفي: aren\'t watching.'
+          },
+          {
+            id: 'ex5_3',
+            num: 3,
+            stem: 'Ahmed _______ coffee every morning.',
+            options: [
+              { letter: 'a', text: "doesn't drinks" },
+              { letter: 'b', text: "doesn't drink" },
+              { letter: 'c', text: "isn't drink" },
+              { letter: 'd', text: "don't drinks" }
+            ],
+            correct: "doesn't drink",
+            feedback: 'عبارة (every morning) مضارع بسيط، ومع الاسم المفرد (Ahmed) نختار (doesn\'t) متبوعة بالفعل المجرد (drink).'
+          },
+          {
+            id: 'ex5_4',
+            num: 4,
+            stem: 'We _______ football at the moment.',
+            options: [
+              { letter: 'a', text: "don't playing" },
+              { letter: 'b', text: "doesn't play" },
+              { letter: 'c', text: "aren't playing" },
+              { letter: 'd', text: "isn't playing" }
+            ],
+            correct: "aren't playing",
+            feedback: 'عبارة (at the moment) تدل على المضارع المستمر، ومع الضمير (We) نختار صيغة النفي: aren\'t playing.'
+          }
+        ]
+      },
+
+      ex6: {
+        id: 'ex6',
+        titleEn: 'Ex. 6: Choose the correct question.',
+        titleAr: 'السؤال السادس: اختر أداة السؤال الصحيحة',
+        items: [
+          {
+            id: 'ex6_1',
+            num: 1,
+            stem: '_______ Ahmed play football every Friday?',
+            options: [
+              { letter: 'a', text: 'Is' },
+              { letter: 'b', text: 'Are' },
+              { letter: 'c', text: 'Does' },
+              { letter: 'd', text: 'Do' }
+            ],
+            correct: 'Does',
+            feedback: 'الفعل الأساسي في المصدر (play) مع وجود (every Friday) والفاعل مفرد (Ahmed)، لذا نسأل بـ (Does).'
+          },
+          {
+            id: 'ex6_2',
+            num: 2,
+            stem: '_______ they studying now?',
+            options: [
+              { letter: 'a', text: 'Do' },
+              { letter: 'b', text: 'Does' },
+              { letter: 'c', text: 'Are' },
+              { letter: 'd', text: 'Is' }
+            ],
+            correct: 'Are',
+            feedback: 'وجود (studying) المضاف له (-ing) وكلمة (now) مع الفاعل الجمع (they) يتطلب الفعل المساعد (Are).'
+          },
+          {
+            id: 'ex6_3',
+            num: 3,
+            stem: '_______ your father drive to work every day?',
+            options: [
+              { letter: 'a', text: 'Does' },
+              { letter: 'b', text: 'Do' },
+              { letter: 'c', text: 'Is' },
+              { letter: 'd', text: 'Are' }
+            ],
+            correct: 'Does',
+            feedback: 'الفاعل مفرد (your father) والفعل في المصدر (drive) مع (every day)، لذلك نبدأ السؤال بـ (Does).'
+          },
+          {
+            id: 'ex6_4',
+            num: 4,
+            stem: '_______ she reading a story now?',
+            options: [
+              { letter: 'a', text: 'Does' },
+              { letter: 'b', text: 'Do' },
+              { letter: 'c', text: 'Are' },
+              { letter: 'd', text: 'Is' }
+            ],
+            correct: 'Is',
+            feedback: 'وجود الفعل (reading) وكلمة (now) مع الفاعل المفرد (she) يتطلب السؤال بـ (Is).'
+          }
+        ]
+      }
+    };
+
+    // State Management
+    const userState = {
+      answers: {},   // id -> string
+      graded: {},    // id -> boolean (true if checked)
+      isCorrect: {}, // id -> boolean
+      soundEnabled: true
+    };
+
+    // Web Audio API Sound Effects
+    function playTone(type) {
+      if (!userState.soundEnabled) return;
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        if (type === 'click') {
+          osc.frequency.setValueAtTime(520, ctx.currentTime);
+          gain.gain.setValueAtTime(0.06, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.05);
+        } else if (type === 'correct') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+          osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.08);
+          osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.16);
+          gain.gain.setValueAtTime(0.12, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.28);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(220, ctx.currentTime);
+          osc.frequency.setValueAtTime(175, ctx.currentTime + 0.12);
+          gain.gain.setValueAtTime(0.08, ctx.currentTime);
+          osc.start();
+          osc.stop(ctx.currentTime + 0.25);
+        }
+      } catch (e) {}
+    }
+
+    function toggleSound() {
+      userState.soundEnabled = !userState.soundEnabled;
+      document.getElementById('soundBtn').textContent = userState.soundEnabled ? '🔊' : '🔇';
+    }
+
+    function toggleGrammarRuleModal() {
+      const modal = document.getElementById('grammarModal');
+      modal.classList.toggle('hidden');
+      modal.classList.toggle('flex');
+    }
+
+    // Normalize string for flexible sentence checking
+    function normalizeText(str) {
+      if (!str) return '';
+      return str
+        .toLowerCase()
+        .replace(/[’‘`]/g, "'")
+        .replace(/[.?!,;:]+$/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    // =========================================================================
+    // RANDOMIZATION / SHUFFLE LOGIC (خلط الخيارات والكلمات بشكل عشوائي)
+    // =========================================================================
+    function shuffleArray(array) {
+      const arr = [...array];
+      if (arr.length <= 1) return arr;
+      const originalSignature = JSON.stringify(arr);
+
+      // Try up to 5 times to guarantee a different order than the previous one
+      for (let attempt = 0; attempt < 5; attempt++) {
+        for (let i = arr.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        if (JSON.stringify(arr) !== originalSignature) break;
+      }
+      return arr;
+    }
+
+    function randomizeAllQuizOptions() {
+      // Ex 1: Shuffle inline options inside parentheses
+      quizData.ex1.items.forEach(item => {
+        item.options = shuffleArray(item.options);
+      });
+
+      // Ex 2: Shuffle quick helper verb forms
+      quizData.ex2.items.forEach(item => {
+        item.helpers = shuffleArray(item.helpers);
+      });
+
+      // Ex 3: Shuffle word bank chips so they are never in solved sentence order
+      quizData.ex3.items.forEach(item => {
+        item.wordBank = shuffleArray(item.wordBank);
+      });
+
+      // Ex 4: Shuffle word bank chips for question building
+      quizData.ex4.items.forEach(item => {
+        item.wordBank = shuffleArray(item.wordBank);
+      });
+
+      // Ex 5: Shuffle MCQ options while keeping a, b, c, d labels ordered
+      const letters = ['a', 'b', 'c', 'd'];
+      quizData.ex5.items.forEach(item => {
+        const shuffledTexts = shuffleArray(item.options.map(o => o.text));
+        item.options = shuffledTexts.map((txt, idx) => ({
+          letter: letters[idx],
+          text: txt
+        }));
+      });
+
+      // Ex 6: Shuffle MCQ options while keeping a, b, c, d labels ordered
+      quizData.ex6.items.forEach(item => {
+        const shuffledTexts = shuffleArray(item.options.map(o => o.text));
+        item.options = shuffledTexts.map((txt, idx) => ({
+          letter: letters[idx],
+          text: txt
+        }));
+      });
+    }
+
+    function shuffleAndResetOptions() {
+      playTone('click');
+      randomizeAllQuizOptions();
+      renderAllExercises();
+    }
+
+    // =========================================================================
+    // RENDER FUNCTIONS FOR ALL 6 EXERCISES
+    // =========================================================================
+    function renderAllExercises() {
+      renderEx1();
+      renderEx2();
+      renderEx3();
+      renderEx4();
+      renderEx5();
+      renderEx6();
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    // Ex 1: Choose / Circle the correct answer inline
+    function renderEx1() {
+      const container = document.getElementById('ex1-container');
+      container.innerHTML = quizData.ex1.items.map(item => {
+        const selected = userState.answers[item.id] || '';
+        const isGraded = userState.graded[item.id];
+        const correct = userState.isCorrect[item.id];
+
+        const optionsHtml = item.options.map((opt, idx) => {
+          let cls = 'circle-option';
+          if (selected === opt) cls += ' selected';
+          if (isGraded) {
+            if (opt === item.correct) cls += ' correct-circle';
+            else if (selected === opt && opt !== item.correct) cls += ' wrong-circle';
+          }
+          const sep = idx < item.options.length - 1 ? '<span class="text-slate-400 font-normal mx-0.5">/</span>' : '';
+          return `<span onclick="selectEx1('${item.id}', '${opt.replace(/'/g, "\\'")}')" class="${cls}">${opt}</span>${sep}`;
+        }).join('');
+
+        return `
+          <div id="card-${item.id}" class="worksheet-row overflow-hidden">
+            <div class="flex items-stretch">
+              <div class="num-tag">${item.num}</div>
+              <div class="p-3.5 flex-1 flex flex-wrap items-center justify-between gap-3">
+                <div class="en-font text-base md:text-lg font-bold text-slate-800 leading-relaxed">
+                  <span>${item.before}</span>
+                  <span class="mx-1 text-slate-700">( ${optionsHtml} )</span>
+                  <span>${item.after}</span>
+                </div>
+                <button onclick="gradeSingleItem('ex1', '${item.id}')" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-white hover:bg-amber-50 text-slate-700 border border-amber-300 shadow-sm transition shrink-0" dir="rtl">
+                  تحقق
+                </button>
+              </div>
+            </div>
+            ${renderFeedbackBox(item.id, item.correct, item.feedback)}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Ex 2: Complete the sentences with the correct form of verbs
+    function renderEx2() {
+      const container = document.getElementById('ex2-container');
+      container.innerHTML = quizData.ex2.items.map(item => {
+        const val = userState.answers[item.id] || '';
+        const isGraded = userState.graded[item.id];
+        const correct = userState.isCorrect[item.id];
+
+        let inputBorder = 'border-slate-300 focus:border-[#6c7f43] bg-white';
+        if (isGraded) {
+          inputBorder = correct
+            ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
+            : 'border-rose-500 bg-rose-50 text-rose-900';
+        }
+
+        const highlightedSentence = item.sentence.replace(
+          `(${item.verb})`,
+          `<span class="px-2 py-0.5 rounded-lg bg-amber-200/80 text-amber-950 font-black">(${item.verb})</span>`
+        );
+
+        const helperButtons = item.helpers.map(h => `
+          <button type="button" onclick="fillInput('${item.id}', '${h}')" class="en-font text-xs font-semibold px-2.5 py-1 rounded-lg bg-white hover:bg-amber-100 border border-amber-300 text-slate-700 transition">
+            ${h}
+          </button>
+        `).join('');
+
+        return `
+          <div id="card-${item.id}" class="worksheet-row overflow-hidden">
+            <div class="flex items-stretch">
+              <div class="num-tag">${item.num}</div>
+              <div class="p-3.5 flex-1 space-y-2.5">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                  <div class="en-font text-base md:text-lg font-bold text-slate-800">
+                    ${highlightedSentence}
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <span class="en-font font-black text-sm text-[#6c7f43] shrink-0">» Answer:</span>
+                    <input
+                      type="text"
+                      id="input-${item.id}"
+                      value="${val.replace(/"/g, '&quot;')}"
+                      oninput="handleTextInput('${item.id}', this.value)"
+                      placeholder="Type verb form..."
+                      class="en-font font-bold text-base px-3 py-1.5 rounded-xl border-2 ${inputBorder} focus:outline-none w-48 md:w-56 transition"
+                    />
+                    <button onclick="gradeSingleItem('ex2', '${item.id}')" class="text-xs font-bold px-3 py-2 rounded-lg bg-white hover:bg-amber-50 text-slate-700 border border-amber-300 shadow-sm transition shrink-0" dir="rtl">
+                      تحقق
+                    </button>
+                  </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-amber-200/60">
+                  <span class="text-[11px] font-bold text-slate-500 ml-1" dir="rtl">خيارات مساعدة سريعة:</span>
+                  ${helperButtons}
+                </div>
+              </div>
+            </div>
+            ${renderFeedbackBox(item.id, item.displayAnswer, item.feedback)}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Ex 3 & Ex 4: Full Sentence Transformation (Negative & Questions)
+    function renderSentenceTransformSection(secKey, containerId) {
+      const container = document.getElementById(containerId);
+      const section = quizData[secKey];
+
+      container.innerHTML = section.items.map(item => {
+        const val = userState.answers[item.id] || '';
+        const isGraded = userState.graded[item.id];
+        const correct = userState.isCorrect[item.id];
+
+        let inputBorder = 'border-slate-300 focus:border-[#6c7f43] bg-white';
+        if (isGraded) {
+          inputBorder = correct
+            ? 'border-emerald-500 bg-emerald-50 text-emerald-900'
+            : 'border-rose-500 bg-rose-50 text-rose-900';
+        }
+
+        const wordChips = item.wordBank.map(w => `
+          <button type="button" onclick="appendWordToInput('${item.id}', '${w.replace(/'/g, "\\'")}')" class="en-font text-xs font-bold px-2.5 py-1 rounded-lg bg-white hover:bg-sky-50 border border-slate-300 text-slate-700 shadow-sm active:scale-95 transition">
+            + ${w}
+          </button>
+        `).join('');
+
+        return `
+          <div id="card-${item.id}" class="worksheet-row overflow-hidden">
+            <div class="flex items-stretch">
+              <div class="num-tag">${item.num}</div>
+              <div class="p-3.5 flex-1 space-y-2.5">
+                <div class="en-font text-base md:text-lg font-bold text-slate-900">
+                  ${item.prompt}
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                  <span class="en-font font-black text-sm text-[#6c7f43] shrink-0">» Answer:</span>
+                  <input
+                    type="text"
+                    id="input-${item.id}"
+                    value="${val.replace(/"/g, '&quot;')}"
+                    oninput="handleTextInput('${item.id}', this.value)"
+                    placeholder="${secKey === 'ex3' ? 'Write the negative sentence here...' : 'Write the question here...'}"
+                    class="en-font font-bold text-base px-3.5 py-2 rounded-xl border-2 ${inputBorder} focus:outline-none flex-1 transition"
+                  />
+                  <div class="flex items-center gap-1.5 shrink-0" dir="rtl">
+                    <button onclick="clearInput('${item.id}')" title="مسح الإجابة" class="text-xs font-bold px-2.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition">
+                      مسح
+                    </button>
+                    <button onclick="gradeSingleItem('${secKey}', '${item.id}')" class="text-xs font-bold px-3.5 py-2 rounded-lg bg-[#6c7f43] hover:bg-[#586934] text-white shadow-sm transition">
+                      تحقق
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Interactive Word Builder Chips -->
+                <div class="flex flex-wrap items-center gap-1.5 pt-1 border-t border-amber-200/60">
+                  <span class="text-[11px] font-bold text-slate-500 mr-1" dir="rtl">انقر لتكوين الجملة بسرعة:</span>
+                  ${wordChips}
+                </div>
+              </div>
+            </div>
+            ${renderFeedbackBox(item.id, item.displayAnswer, item.feedback)}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderEx3() {
+      renderSentenceTransformSection('ex3', 'ex3-container');
+    }
+
+    function renderEx4() {
+      renderSentenceTransformSection('ex4', 'ex4-container');
+    }
+
+    // Ex 5 & Ex 6: Multiple Choice (a, b, c, d)
+    function renderMCQSection(secKey, containerId) {
+      const container = document.getElementById(containerId);
+      const section = quizData[secKey];
+
+      container.innerHTML = section.items.map(item => {
+        const selected = userState.answers[item.id] || '';
+        const isGraded = userState.graded[item.id];
+
+        const filledStem = selected
+          ? item.stem.replace('_______', `<span class="px-3 py-0.5 rounded-lg bg-amber-200 text-slate-900 underline decoration-2">${selected}</span>`)
+          : item.stem;
+
+        const optionsGrid = item.options.map(opt => {
+          const isChosen = selected === opt.text;
+          let btnStyle = 'bg-white hover:bg-amber-50 border-slate-300 text-slate-800';
+          let badgeStyle = 'bg-[#7d9152] text-white';
+
+          if (isChosen && !isGraded) {
+            btnStyle = 'bg-amber-100 border-amber-500 text-slate-900 ring-2 ring-amber-300';
+            badgeStyle = 'bg-amber-600 text-white';
+          }
+
+          if (isGraded) {
+            if (opt.text === item.correct) {
+              btnStyle = 'bg-emerald-100 border-emerald-600 text-emerald-950 font-black';
+              badgeStyle = 'bg-emerald-600 text-white';
+            } else if (isChosen && opt.text !== item.correct) {
+              btnStyle = 'bg-rose-100 border-rose-500 text-rose-900 line-through';
+              badgeStyle = 'bg-rose-600 text-white';
+            }
+          }
+
+          return `
+            <button
+              type="button"
+              onclick="selectMCQ('${secKey}', '${item.id}', '${opt.text.replace(/'/g, "\\'")}')"
+              class="flex items-center gap-2.5 p-2.5 rounded-xl border-2 ${btnStyle} transition text-left en-font font-bold text-sm md:text-base"
+            >
+              <span class="w-7 h-7 rounded-full ${badgeStyle} flex items-center justify-center font-black text-xs shrink-0">
+                ${opt.letter}
+              </span>
+              <span>${opt.text}</span>
+            </button>
+          `;
+        }).join('');
+
+        return `
+          <div id="card-${item.id}" class="worksheet-row overflow-hidden">
+            <div class="flex items-stretch">
+              <div class="num-tag">${item.num}</div>
+              <div class="p-4 flex-1 space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                  <div class="en-font text-base md:text-lg font-bold text-slate-900">
+                    ${filledStem}
+                  </div>
+                  <button onclick="gradeSingleItem('${secKey}', '${item.id}')" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-white hover:bg-amber-50 text-slate-700 border border-amber-300 shadow-sm transition shrink-0" dir="rtl">
+                    تحقق
+                  </button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2.5">
+                  ${optionsGrid}
+                </div>
+              </div>
+            </div>
+            ${renderFeedbackBox(item.id, item.correct, item.feedback)}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderEx5() {
+      renderMCQSection('ex5', 'ex5-container');
+    }
+
+    function renderEx6() {
+      renderMCQSection('ex6', 'ex6-container');
+    }
+
+    // Feedback Box Renderer
+    function renderFeedbackBox(itemId, correctDisplay, explanation) {
+      if (!userState.graded[itemId]) return '';
+      const isRight = userState.isCorrect[itemId];
+
+      if (isRight) {
+        return `
+          <div dir="rtl" class="bg-emerald-50 border-t-2 border-emerald-200 px-4 py-2.5 text-xs md:text-sm flex items-start gap-2 text-emerald-900">
+            <span class="text-lg">✅</span>
+            <div>
+              <span class="font-black">إجابة صحيحة! أحسنت يا بطل.</span>
+              <p class="text-emerald-800 font-semibold mt-0.5">${explanation}</p>
+            </div>
+          </div>
+        `;
+      } else {
+        return `
+          <div dir="rtl" class="bg-rose-50 border-t-2 border-rose-200 px-4 py-2.5 text-xs md:text-sm flex items-start gap-2 text-rose-900">
+            <span class="text-lg">❌</span>
+            <div class="flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="font-black">إجابة غير دقيقة.</span>
+                <span class="bg-white px-2.5 py-0.5 rounded-md border border-rose-300 font-bold text-slate-800">
+                  الإجابة الصحيحة: <strong class="en-font text-emerald-700" dir="ltr">${correctDisplay}</strong>
+                </span>
+              </div>
+              <p class="text-rose-800 font-semibold mt-1">${explanation}</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // =========================================================================
+    // INTERACTION HANDLERS
+    // =========================================================================
+    function selectEx1(itemId, optionText) {
+      playTone('click');
+      userState.answers[itemId] = optionText;
+      delete userState.graded[itemId];
+      delete userState.isCorrect[itemId];
+      renderEx1();
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    function selectMCQ(secKey, itemId, optionText) {
+      playTone('click');
+      userState.answers[itemId] = optionText;
+      delete userState.graded[itemId];
+      delete userState.isCorrect[itemId];
+      if (secKey === 'ex5') renderEx5();
+      if (secKey === 'ex6') renderEx6();
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    function handleTextInput(itemId, value) {
+      if (value.trim() === '') {
+        delete userState.answers[itemId];
+      } else {
+        userState.answers[itemId] = value;
+      }
+      delete userState.graded[itemId];
+      delete userState.isCorrect[itemId];
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    function fillInput(itemId, text) {
+      playTone('click');
+      userState.answers[itemId] = text;
+      delete userState.graded[itemId];
+      delete userState.isCorrect[itemId];
+      renderEx2();
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    function appendWordToInput(itemId, word) {
+      playTone('click');
+      const current = (userState.answers[itemId] || '').trim();
+      const nextVal = current ? `${current} ${word}` : word;
+      userState.answers[itemId] = nextVal;
+      delete userState.graded[itemId];
+      delete userState.isCorrect[itemId];
+      const inputEl = document.getElementById(`input-${itemId}`);
+      if (inputEl) inputEl.value = nextVal;
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    function clearInput(itemId) {
+      delete userState.answers[itemId];
+      delete userState.graded[itemId];
+      delete userState.isCorrect[itemId];
+      const secKey = itemId.split('_')[0];
+      if (secKey === 'ex3') renderEx3();
+      if (secKey === 'ex4') renderEx4();
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    // =========================================================================
+    // GRADING LOGIC
+    // =========================================================================
+    function checkItemCorrectness(secKey, item) {
+      const rawAns = userState.answers[item.id] || '';
+      if (!rawAns.trim()) return false;
+
+      if (secKey === 'ex1' || secKey === 'ex5' || secKey === 'ex6') {
+        return rawAns.trim() === item.correct;
+      } else {
+        const normUser = normalizeText(rawAns);
+        return item.accepted.some(acc => normalizeText(acc) === normUser);
+      }
+    }
+
+    function gradeSingleItem(secKey, itemId) {
+      const section = quizData[secKey];
+      const item = section.items.find(i => i.id === itemId);
+      if (!item) return;
+
+      const isRight = checkItemCorrectness(secKey, item);
+      userState.graded[itemId] = true;
+      userState.isCorrect[itemId] = isRight;
+
+      playTone(isRight ? 'correct' : 'wrong');
+
+      if (secKey === 'ex1') renderEx1();
+      if (secKey === 'ex2') renderEx2();
+      if (secKey === 'ex3') renderEx3();
+      if (secKey === 'ex4') renderEx4();
+      if (secKey === 'ex5') renderEx5();
+      if (secKey === 'ex6') renderEx6();
+
+      renderQuestionBoard();
+      updateHeaderStats();
+    }
+
+    function gradeSection(secKey) {
+      const section = quizData[secKey];
+      let allCorrect = true;
+      section.items.forEach(item => {
+        const isRight = checkItemCorrectness(secKey, item);
+        userState.graded[item.id] = true;
+        userState.isCorrect[item.id] = isRight;
+        if (!isRight) allCorrect = false;
+      });
+
+      playTone(allCorrect ? 'correct' : 'wrong');
+      renderAllExercises();
+    }
+
+    function gradeAllQuestions(scrollToResult = true) {
+      let totalItems = 0;
+      let totalCorrect = 0;
+      const sectionScores = {};
+
+      Object.keys(quizData).forEach(secKey => {
+        const sec = quizData[secKey];
+        let secRight = 0;
+        sec.items.forEach(item => {
+          totalItems++;
+          const isRight = checkItemCorrectness(secKey, item);
+          userState.graded[item.id] = true;
+          userState.isCorrect[item.id] = isRight;
+          if (isRight) {
+            totalCorrect++;
+            secRight++;
+          }
+        });
+        sectionScores[secKey] = { correct: secRight, total: sec.items.length };
+      });
+
+      renderAllExercises();
+      showFinalMotivationalResult(totalCorrect, totalItems, sectionScores, scrollToResult);
+    }
+
+    function showFinalMotivationalResult(score, total, sectionScores, scrollToResult) {
+      const pct = Math.round((score / total) * 100);
+      const resultSec = document.getElementById('finalResultSection');
+      resultSec.classList.remove('hidden');
+
+      document.getElementById('finalScoreBig').textContent = `${score} / ${total}`;
+      document.getElementById('finalPercentBig').textContent = `${pct}%`;
+
+      const trophyEl = document.getElementById('resultTrophyIcon');
+      const titleEl = document.getElementById('resultTitleText');
+      const subEl = document.getElementById('resultSubText');
+      const quoteEl = document.getElementById('motivationalQuoteText');
+      const badgeEl = document.getElementById('resultBadgeTag');
+
+      const studentName = document.getElementById('studentNameInput').value.trim() || 'يا بطل';
+
+      if (pct >= 90) {
+        trophyEl.textContent = '👑';
+        badgeEl.textContent = 'FULL MARK STAR - ممتاز جداً';
+        badgeEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 mb-1';
+        titleEl.textContent = `إنجاز أسطوري يا ${studentName}! 🌟`;
+        subEl.textContent = 'لقد أتقنت قواعد المضارع البسيط والمستمر وتكوين النفي والسؤال ببراعة فائقة!';
+        quoteEl.textContent = 'أنت فخرٌ لنا! استمر على هذا المستوى الرائع وستحقق الدرجة الكاملة دائماً (Full Mark).';
+        try {
+          confetti({ particleCount: 110, spread: 80, origin: { y: 0.6 } });
+        } catch (e) {}
+        playTone('correct');
+      } else if (pct >= 75) {
+        trophyEl.textContent = '🏆';
+        badgeEl.textContent = 'VERY GOOD - جيد جداً';
+        badgeEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-black bg-sky-100 text-sky-800 mb-1';
+        titleEl.textContent = `أحسنت يا ${studentName}! مستوى رائع 👏`;
+        subEl.textContent = 'أغلب إجاباتك صحيحة، وأنت قريب جداً من الدرجة الكاملة.';
+        quoteEl.textContent = 'راجع الفقرات الملونة بالأحمر واقرأ التغذية الراجعة التوضيحية أسفلها لتصل إلى 100%!';
+        try {
+          confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
+        } catch (e) {}
+        playTone('correct');
+      } else if (pct >= 50) {
+        trophyEl.textContent = '⭐';
+        badgeEl.textContent = 'GOOD EFFORT - محاولة جيدة';
+        badgeEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-black bg-amber-100 text-amber-800 mb-1';
+        titleEl.textContent = `بداية طيبة يا ${studentName}! 💪`;
+        subEl.textContent = 'لديك أساس جيد، وتحتاج فقط لمراجعة الفرق بين الكلمات الدالة للمضارع البسيط والمستمر.';
+        quoteEl.textContent = 'لا تستسلم أبداً! اقرأ التغذية الراجعة أسفل كل سؤال ثم اضغط إعادة المحاولة لتحسين درجتك.';
+      } else {
+        trophyEl.textContent = '🌱';
+        badgeEl.textContent = 'KEEP PRACTICING - واصل التدريب';
+        badgeEl.className = 'inline-block px-3 py-1 rounded-full text-xs font-black bg-rose-100 text-rose-800 mb-1';
+        titleEl.textContent = `محاولة شجاعة يا ${studentName}! 🌟`;
+        subEl.textContent = 'التعلم يبدأ بالمحاولة! لقد وضعنا لك شرحاً مبسطاً تحت كل سؤال لمساعدتك.';
+        quoteEl.textContent = 'افتح "ملخص القاعدة" في القائمة الجانبية وراجع الإجابات الصحيحة، ثم جرب مرة أخرى وستنجح بإذن الله!';
+      }
+
+      // Render Breakdown Grid
+      const breakdownGrid = document.getElementById('sectionBreakdownGrid');
+      const labels = {
+        ex1: 'Ex. 1 (دائرة)',
+        ex2: 'Ex. 2 (الأفعال)',
+        ex3: 'Ex. 3 (النفي)',
+        ex4: 'Ex. 4 (السؤال)',
+        ex5: 'Ex. 5 (اختر نفي)',
+        ex6: 'Ex. 6 (اختر سؤال)'
+      };
+
+      breakdownGrid.innerHTML = Object.keys(sectionScores).map(k => {
+        const s = sectionScores[k];
+        const isFull = s.correct === s.total;
+        return `
+          <div onclick="scrollToElement('section-${k}')" class="cursor-pointer p-3 rounded-2xl border-2 ${isFull ? 'bg-emerald-50 border-emerald-300' : 'bg-slate-50 border-slate-200'} text-center hover:shadow transition">
+            <span class="text-xs font-bold text-slate-600 block">${labels[k]}</span>
+            <span class="en-font text-lg font-black ${isFull ? 'text-emerald-700' : 'text-slate-800'}">${s.correct} / ${s.total}</span>
+          </div>
+        `;
+      }).join('');
+
+      if (scrollToResult) {
+        resultSec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // =========================================================================
+    // QUESTION NAVIGATION BOARD (لوحة الأسئلة) & STATS
+    // =========================================================================
+    function renderQuestionBoard() {
+      const board = document.getElementById('questionBoardContainer');
+      const secNames = {
+        ex1: 'السؤال 1: ضع دائرة (Ex. 1)',
+        ex2: 'السؤال 2: صيغة الفعل (Ex. 2)',
+        ex3: 'السؤال 3: النفي (Ex. 3)',
+        ex4: 'السؤال 4: تكوين سؤال (Ex. 4)',
+        ex5: 'السؤال 5: اختر النفي (Ex. 5)',
+        ex6: 'السؤال 6: اختر السؤال (Ex. 6)'
+      };
+
+      board.innerHTML = Object.keys(quizData).map(secKey => {
+        const sec = quizData[secKey];
+        const buttons = sec.items.map(item => {
+          const hasAns = Boolean((userState.answers[item.id] || '').trim());
+          const isGraded = Boolean(userState.graded[item.id]);
+          const isRight = Boolean(userState.isCorrect[item.id]);
+
+          let btnCls = 'bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200';
+          if (isGraded) {
+            btnCls = isRight
+              ? 'bg-emerald-500 text-white border-emerald-600 shadow-sm'
+              : 'bg-rose-500 text-white border-rose-600 shadow-sm';
+          } else if (hasAns) {
+            btnCls = 'bg-sky-500 text-white border-sky-600 shadow-sm';
+          }
+
+          return `
+            <button
+              onclick="jumpToQuestion('${secKey}', '${item.id}')"
+              class="w-8 h-8 rounded-lg border font-black text-xs en-font flex items-center justify-center transition ${btnCls}"
+              title="انتقل إلى ${sec.titleAr} - فقرة ${item.num}"
+            >
+              ${item.num}
+            </button>
+          `;
+        }).join('');
+
+        return `
+          <div class="bg-slate-50/80 p-2.5 rounded-xl border border-slate-200">
+            <div class="text-xs font-extrabold text-slate-700 mb-2 flex items-center justify-between">
+              <span>${secNames[secKey]}</span>
+              <span class="text-[11px] text-slate-400 en-font">${sec.items.length} items</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              ${buttons}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function updateHeaderStats() {
+      let total = 0;
+      let answered = 0;
+      let correct = 0;
+
+      Object.keys(quizData).forEach(secKey => {
+        quizData[secKey].items.forEach(item => {
+          total++;
+          if ((userState.answers[item.id] || '').trim()) answered++;
+          if (userState.graded[item.id] && userState.isCorrect[item.id]) correct++;
+        });
+      });
+
+      const pct = Math.round((answered / total) * 100);
+      document.getElementById('headerProgressText').textContent = `${answered} / ${total}`;
+      document.getElementById('headerScoreText').textContent = `${correct} / ${total}`;
+      document.getElementById('completionPercentBadge').textContent = `${pct}%`;
+      document.getElementById('sidebarProgressBar').style.width = `${pct}%`;
+    }
+
+    function jumpToQuestion(secKey, itemId) {
+      filterSection('all');
+      const el = document.getElementById(`card-${itemId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        el.classList.add('ring-4', 'ring-amber-400');
+        setTimeout(() => el.classList.remove('ring-4', 'ring-amber-400'), 1600);
+      }
+    }
+
+    function scrollToElement(id) {
+      filterSection('all');
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function filterSection(target) {
+      document.querySelectorAll('.sec-tab').forEach(btn => {
+        btn.className = 'sec-tab bg-slate-100 hover:bg-slate-200 text-slate-700 py-1.5 rounded-lg en-font transition';
+      });
+      const activeBtn = document.getElementById(`tab-${target}`);
+      if (activeBtn) {
+        activeBtn.className = 'sec-tab bg-[#6c7f43] text-white py-1.5 rounded-lg en-font transition';
+      }
+
+      document.querySelectorAll('.quiz-section').forEach(sec => {
+        if (target === 'all' || sec.id === `section-${target}`) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
+    }
+
+    function resetQuiz() {
+      userState.answers = {};
+      userState.graded = {};
+      userState.isCorrect = {};
+      document.getElementById('finalResultSection').classList.add('hidden');
+      randomizeAllQuizOptions();
+      renderAllExercises();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // PRINT REPORT GENERATION (طباعة النتيجة والتقرير المفصل)
+    // =========================================================================
+    function openPrintReport() {
+      // Grade all items first so the printed report has complete results
+      gradeAllQuestions(false);
+
+      const name = document.getElementById('studentNameInput').value.trim() || 'طالب متميز';
+      const cls = document.getElementById('studentClassInput').value.trim() || 'الصف السادس';
+      const school = document.getElementById('studentSchoolInput').value.trim() || 'مدرستي';
+
+      let total = 0;
+      let correct = 0;
+      Object.keys(quizData).forEach(secKey => {
+        quizData[secKey].items.forEach(item => {
+          total++;
+          if (userState.isCorrect[item.id]) correct++;
+        });
+      });
+      const pct = Math.round((correct / total) * 100);
+
+      document.getElementById('printStudentName').textContent = name;
+      document.getElementById('printStudentClass').textContent = cls;
+      document.getElementById('printStudentSchool').textContent = school;
+      document.getElementById('printFinalScore').textContent = `${correct} / ${total} (${pct}%)`;
+      document.getElementById('printDateText').textContent = `التاريخ: ${new Date().toLocaleDateString('ar-SA')}`;
+      document.getElementById('printBadgeStatus').textContent = pct >= 90 ? 'EXCELLENT - ممتاز' : pct >= 75 ? 'VERY GOOD - جيد جداً' : 'GOOD EFFORT';
+
+      const printTableContainer = document.getElementById('printQuestionsTableContainer');
+      printTableContainer.innerHTML = Object.keys(quizData).map(secKey => {
+        const sec = quizData[secKey];
+        const rows = sec.items.map(item => {
+          const userAns = userState.answers[item.id] || '(لم يُجب)';
+          const rightAns = item.correct || item.displayAnswer;
+          const isOk = userState.isCorrect[item.id];
+          const qPrompt = item.prompt || item.sentence || item.stem || `${item.before} (${item.options.join(' / ')}) ${item.after}`;
+
+          return `
+            <tr class="border-b border-slate-200">
+              <td class="p-2 font-bold en-font text-center w-10">${item.num}</td>
+              <td class="p-2 en-font text-left" dir="ltr">${qPrompt}</td>
+              <td class="p-2 en-font font-bold text-left ${isOk ? 'text-emerald-700' : 'text-rose-700'}" dir="ltr">${userAns}</td>
+              <td class="p-2 en-font font-bold text-emerald-800 text-left" dir="ltr">${rightAns}</td>
+              <td class="p-2 text-center font-black">${isOk ? '✓ صحيحة' : '✗ خاطئة'}</td>
+            </tr>
+          `;
+        }).join('');
+
+        return `
+          <div class="print-break-inside-avoid border border-slate-300 rounded-xl overflow-hidden mb-4">
+            <div class="bg-slate-100 px-3 py-2 font-black text-sm border-b border-slate-300 flex justify-between">
+              <span>${sec.titleAr}</span>
+              <span class="en-font">${sec.titleEn}</span>
+            </div>
+            <table class="w-full text-xs">
+              <thead>
+                <tr class="bg-slate-50 border-b border-slate-200 text-slate-600">
+                  <th class="p-2">#</th>
+                  <th class="p-2 text-left" dir="ltr">Question</th>
+                  <th class="p-2 text-left" dir="ltr">Student Answer</th>
+                  <th class="p-2 text-left" dir="ltr">Correct Answer</th>
+                  <th class="p-2">التقييم</th>
+                </tr>
+              </thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
+        `;
+      }).join('');
+
+      window.print();
+    }
+
+    // Initialize on load with randomized options
+    window.addEventListener('DOMContentLoaded', () => {
+      randomizeAllQuizOptions();
+      renderAllExercises();
+    });
+  </script>
+</body>
+</html>
